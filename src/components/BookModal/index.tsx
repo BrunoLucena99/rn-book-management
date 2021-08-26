@@ -2,17 +2,17 @@ import React from 'react';
 import {useState} from 'react';
 import {Alert} from 'react-native';
 import Modal from 'react-native-modal';
-import {BookInterface} from '../../types/book';
+import {BookInterface, NewBookProps} from '../../types/book';
 import Button from '../Button';
 import Input from '../Input';
 import {Container, FormContainer, Wrapper, Title} from './styles';
 
 interface BookModalProps {
-	book?: BookInterface;
+	book?: BookInterface | null;
 	onCloseRequest: () => void;
-	onEditBook: () => void;
-	onAddBook: (book: BookInterface) => void;
-	onRemoveBook: () => void;
+	onEditBook: (book: BookInterface) => void;
+	onAddBook: (book: NewBookProps) => void;
+	onRemoveBook: (bookId: string) => void;
 }
 
 const BookModal = ({
@@ -30,8 +30,25 @@ const BookModal = ({
 	const [publishBy, setPublishBy] = useState(book?.publishBy ?? '');
 	const [edition, setEdition] = useState(book?.edition ?? '');
 
+	const verifyIfIsEmpty = () => !name || !author || !publishBy || !edition;
+
+	const handleEditBook = async () => {
+		if (verifyIfIsEmpty()) {
+			Alert.alert('Atenção', 'Preencha todos os campos');
+			return;
+		}
+		try {
+			setIsLoading(true);
+			await onEditBook({name, author, publishBy, edition, id: book!.id});
+			onCloseRequest();
+		} catch {
+			Alert.alert('Atenção', 'Ocorreu um erro ao editar o livro');
+			setIsLoading(false);
+		}
+	};
+
 	const handleAddBook = async () => {
-		if (!name || !author || !publishBy || !edition) {
+		if (verifyIfIsEmpty()) {
 			Alert.alert('Atenção', 'Preencha todos os campos');
 			return;
 		}
@@ -42,6 +59,17 @@ const BookModal = ({
 			onCloseRequest();
 		} catch {
 			Alert.alert('Atenção', 'Ocorreu um erro ao salvar o livro');
+			setIsLoading(false);
+		}
+	};
+
+	const removeUserBook = async () => {
+		try {
+			setIsLoading(true);
+			await onRemoveBook(book!.id);
+			onCloseRequest();
+		} catch {
+			Alert.alert('Atenção', 'Ocorreu um erro ao remover o livro');
 			setIsLoading(false);
 		}
 	};
@@ -95,13 +123,13 @@ const BookModal = ({
 					/>
 				) : (
 					<>
-						<Button label="EDITAR LIVRO" onPress={onEditBook} />
+						<Button label="EDITAR LIVRO" onPress={handleEditBook} />
 						<Wrapper />
 						<Button
 							label="REMOVER LIVRO"
 							bgColor="secondary"
 							textColor="white"
-							onPress={onRemoveBook}
+							onPress={removeUserBook}
 						/>
 					</>
 				)}

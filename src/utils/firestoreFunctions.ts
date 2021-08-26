@@ -1,5 +1,5 @@
 import {fireDb, userCollection} from '../config/firebase';
-import {BookInterface} from '../types/book';
+import {BookInterface, NewBookProps} from '../types/book';
 
 interface FirestoreUser {
 	email: string;
@@ -44,7 +44,8 @@ export const getBooksByUserUid = async (uid: string) => {
 			.get();
 
 		collectionData.forEach(doc => {
-			books.push(doc.data());
+			const obj: BookInterface = {id: doc.id, ...doc.data()};
+			books.push(obj);
 		});
 
 		return books;
@@ -53,10 +54,29 @@ export const getBooksByUserUid = async (uid: string) => {
 	}
 };
 
-export const addBookToUser = async (userUid: string, book: BookInterface) => {
+export const addBookToUser = async (userUid: string, book: NewBookProps) => {
 	return await fireDb()
 		.collection('users')
 		.doc(userUid)
 		.collection('books')
 		.add(book);
+};
+
+export const editBookToUser = async (userUid: string, book: BookInterface) => {
+	const {author, edition, publishBy, name} = book;
+	return await fireDb()
+		.collection('users')
+		.doc(userUid)
+		.collection('books')
+		.doc(book.id)
+		.update({author, edition, publishBy, name});
+};
+
+export const removeUserBook = async (userUid: string, bookId: string) => {
+	return await fireDb()
+		.collection('users')
+		.doc(userUid)
+		.collection('books')
+		.doc(bookId)
+		.delete();
 };

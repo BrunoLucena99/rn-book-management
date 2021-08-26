@@ -1,14 +1,15 @@
 import {useCallback, useEffect, useState} from 'react';
-import {BookInterface} from '../../types/book';
-import {addBookToUser, getBooksByUserUid} from '../../utils/firestoreFunctions';
-
-interface BooksInterface {
-	name: string;
-}
+import {BookInterface, NewBookProps} from '../../types/book';
+import {
+	addBookToUser,
+	editBookToUser,
+	getBooksByUserUid,
+	removeUserBook,
+} from '../../utils/firestoreFunctions';
 
 const useBooks = (userUid: string, immediate: boolean = false) => {
 	const [isSearchingBooks, setIsSearchingBooks] = useState(false);
-	const [books, setBooks] = useState<BooksInterface[] | null>(null);
+	const [books, setBooks] = useState<BookInterface[] | null>(null);
 
 	const getUserBooks = useCallback(async () => {
 		try {
@@ -22,9 +23,31 @@ const useBooks = (userUid: string, immediate: boolean = false) => {
 		}
 	}, [userUid]);
 
-	const addBook = async (book: BookInterface) => {
+	const addBook = async (book: NewBookProps) => {
 		try {
 			await addBookToUser(userUid, book);
+		} catch (error) {
+			throw error;
+		}
+	};
+
+	const editBook = async (book: BookInterface) => {
+		try {
+			await editBookToUser(userUid, book);
+			const mappedBooks = books!.map(item =>
+				item.id === book.id ? book : item,
+			);
+			setBooks(mappedBooks);
+		} catch (error) {
+			throw error;
+		}
+	};
+
+	const removeBook = async (bookId: string) => {
+		try {
+			await removeUserBook(userUid, bookId);
+			const filteredBooks = books!.filter(book => book.id !== bookId);
+			setBooks(filteredBooks);
 		} catch (error) {
 			throw error;
 		}
@@ -41,6 +64,8 @@ const useBooks = (userUid: string, immediate: boolean = false) => {
 		books,
 		isSearching: isSearchingBooks,
 		addBook,
+		editBook,
+		removeBook,
 	};
 };
 
