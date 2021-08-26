@@ -12,8 +12,6 @@ const Routes = () => {
 	const Stack = createNativeStackNavigator<RootStackParamList>();
 	const {user} = useContext(UserContext);
 
-	console.log(user);
-
 	return (
 		<NavigationContainer>
 			<Stack.Navigator screenOptions={{headerShown: false}}>
@@ -23,7 +21,11 @@ const Routes = () => {
 						<Stack.Screen name="RegisterUser" component={RegisterUserPage} />
 					</>
 				) : (
-					<Stack.Screen name="Home" component={HomePage} />
+					<Stack.Screen
+						name="Home"
+						component={HomePage}
+						initialParams={{userUid: user.uid}}
+					/>
 				)}
 			</Stack.Navigator>
 		</NavigationContainer>

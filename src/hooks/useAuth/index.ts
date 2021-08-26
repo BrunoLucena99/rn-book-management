@@ -18,8 +18,6 @@ const useAuth = () => {
 			const {user} = await auth().signInWithEmailAndPassword(email, password);
 			const userFirestore = await getUserByUid(user.uid);
 			saveUserAsync(userFirestore);
-
-			console.log(await getUserByUid(user.uid));
 		} catch (err) {
 			if (err.code === 'auth/user-not-found') {
 				navigation.navigate('RegisterUser', {email, password});
@@ -57,7 +55,7 @@ const useAuth = () => {
 			'Atenção',
 			'Não foi possível realizar sua solicitação, tente novamente mais tarde',
 		);
-		console.warn(errorCode);
+		console.log(errorCode);
 	};
 
 	return {

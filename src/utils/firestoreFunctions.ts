@@ -1,4 +1,4 @@
-import {userCollection} from '../config/firebase';
+import {fireDb, userCollection} from '../config/firebase';
 
 interface FirestoreUser {
 	email: string;
@@ -27,8 +27,27 @@ export const getUserByUid = async (uid: string) => {
 				uid,
 			};
 		}
-		return null;
+		throw 'Usuário não encontrado';
 	} catch (err) {
-		throw err.code;
+		throw err.code ?? err.toString();
+	}
+};
+
+export const getBooksByUserUid = async (uid: string) => {
+	try {
+		const books: {name: string}[] = [];
+		const collectionData = await fireDb()
+			.collection('users')
+			.doc(uid)
+			.collection('books')
+			.get();
+
+		collectionData.forEach(doc => {
+			books.push(doc.data());
+		});
+
+		return books;
+	} catch (error) {
+		throw error.code ? error.code : error.toString();
 	}
 };

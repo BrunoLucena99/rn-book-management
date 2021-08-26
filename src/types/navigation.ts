@@ -4,7 +4,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 export type RootStackParamList = {
 	RegisterUser?: {email?: string; password?: string};
 	Login: undefined;
-	Home: undefined;
+	Home: {userUid: string};
 };
 
 export type LoginPageProps = {
@@ -14,4 +14,9 @@ export type LoginPageProps = {
 export type RegisterUserProps = {
 	navigation: NativeStackNavigationProp<RootStackParamList, 'RegisterUser'>;
 	route: RouteProp<RootStackParamList, 'RegisterUser'>;
+};
+
+export type HomePageProps = {
+	navigation: NativeStackNavigationProp<RootStackParamList, 'Home'>;
+	route: RouteProp<RootStackParamList, 'Home'>;
 };
