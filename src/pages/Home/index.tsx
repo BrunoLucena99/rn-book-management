@@ -7,7 +7,7 @@ import Loading from '../../components/Loading';
 import useBooks from '../../hooks/useBooks';
 import {BookInterface} from '../../types/book';
 import {HomePageProps} from '../../types/navigation';
-import {MainContainer} from './styles';
+import {Header, MainContainer, TextHeader} from './styles';
 
 const HomePage = ({route}: HomePageProps) => {
 	const {books, isSearching, addBook, editBook, removeBook} = useBooks(
@@ -41,6 +41,9 @@ const HomePage = ({route}: HomePageProps) => {
 	return (
 		<>
 			<MainContainer>
+				<Header>
+					<TextHeader>Book Managament List</TextHeader>
+				</Header>
 				{!!books && (
 					<FlatList
 						contentContainerStyle={{flexGrow: 1}}
