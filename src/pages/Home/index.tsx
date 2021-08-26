@@ -1,11 +1,16 @@
 import React from 'react';
 import {Text} from 'react-native';
+import Loading from '../../components/Loading';
 import useBooks from '../../hooks/useBooks';
 import {HomePageProps} from '../../types/navigation';
 import {MainContainer} from './styles';
 
 const HomePage = ({route}: HomePageProps) => {
-	const {books} = useBooks(route.params.userUid, true);
+	const {books, isSearching} = useBooks(route.params.userUid, true);
+
+	if (!isSearching) {
+		return <Loading />;
+	}
 
 	return (
 		<MainContainer>
