@@ -1,4 +1,5 @@
 import {fireDb, userCollection} from '../config/firebase';
+import {BookInterface} from '../types/book';
 
 interface FirestoreUser {
 	email: string;
@@ -35,7 +36,7 @@ export const getUserByUid = async (uid: string) => {
 
 export const getBooksByUserUid = async (uid: string) => {
 	try {
-		const books: {name: string}[] = [];
+		const books: BookInterface[] = [];
 		const collectionData = await fireDb()
 			.collection('users')
 			.doc(uid)
@@ -50,4 +51,12 @@ export const getBooksByUserUid = async (uid: string) => {
 	} catch (error) {
 		throw error.code ? error.code : error.toString();
 	}
+};
+
+export const addBookToUser = async (userUid: string, book: BookInterface) => {
+	return await fireDb()
+		.collection('users')
+		.doc(userUid)
+		.collection('books')
+		.add(book);
 };

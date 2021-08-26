@@ -8,7 +8,7 @@ import {HomePageProps} from '../../types/navigation';
 import {MainContainer} from './styles';
 
 const HomePage = ({route}: HomePageProps) => {
-	const {books, isSearching} = useBooks(route.params.userUid, true);
+	const {books, isSearching, addBook} = useBooks(route.params.userUid, true);
 	const [modalVisible, setModalVisible] = useState(false);
 
 	const onCloseModal = () => setModalVisible(false);
@@ -35,7 +35,7 @@ const HomePage = ({route}: HomePageProps) => {
 				<BookModal
 					onRemoveBook={() => {}}
 					onEditBook={() => {}}
-					onAddBook={() => {}}
+					onAddBook={addBook}
 					onCloseRequest={onCloseModal}
 				/>
 			)}

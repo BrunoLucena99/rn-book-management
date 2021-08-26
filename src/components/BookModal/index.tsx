@@ -1,4 +1,6 @@
 import React from 'react';
+import {useState} from 'react';
+import {Alert} from 'react-native';
 import Modal from 'react-native-modal';
 import {BookInterface} from '../../types/book';
 import Button from '../Button';
@@ -9,7 +11,7 @@ interface BookModalProps {
 	book?: BookInterface;
 	onCloseRequest: () => void;
 	onEditBook: () => void;
-	onAddBook: () => void;
+	onAddBook: (book: BookInterface) => void;
 	onRemoveBook: () => void;
 }
 
@@ -21,6 +23,28 @@ const BookModal = ({
 	onAddBook,
 }: BookModalProps) => {
 	const isEdit = !!book;
+
+	const [isLoading, setIsLoading] = useState(false);
+	const [name, setName] = useState(book?.name ?? '');
+	const [author, setAuthor] = useState(book?.author ?? '');
+	const [publishBy, setPublishBy] = useState(book?.publishBy ?? '');
+	const [edition, setEdition] = useState(book?.edition ?? '');
+
+	const handleAddBook = async () => {
+		if (!name || !author || !publishBy || !edition) {
+			Alert.alert('Atenção', 'Preencha todos os campos');
+			return;
+		}
+
+		try {
+			setIsLoading(true);
+			await onAddBook({name, author, publishBy, edition});
+			onCloseRequest();
+		} catch {
+			Alert.alert('Atenção', 'Ocorreu um erro ao salvar o livro');
+			setIsLoading(false);
+		}
+	};
 
 	return (
 		<Modal
@@ -34,17 +58,41 @@ const BookModal = ({
 			<Container>
 				<Title>{isEdit ? 'Editar/Remover livro' : 'Adicionar um livro'}</Title>
 				<FormContainer>
-					<Input placeholder="Insira o nome do livro" label="Nome do Livro" />
+					<Input
+						value={name}
+						onChangeText={setName}
+						placeholder="Insira o nome do livro"
+						label="Nome do Livro"
+					/>
 					<Wrapper />
-					<Input placeholder="Insira o nome do autor" label="Autor" />
+					<Input
+						value={author}
+						onChangeText={setAuthor}
+						placeholder="Insira o nome do autor"
+						label="Autor"
+					/>
 					<Wrapper />
-					<Input placeholder="Nome da editora" label="Editora" />
+					<Input
+						value={publishBy}
+						onChangeText={setPublishBy}
+						placeholder="Nome da editora"
+						label="Editora"
+					/>
 					<Wrapper />
-					<Input placeholder="Edição" label="Nome da edição" />
+					<Input
+						value={edition}
+						onChangeText={setEdition}
+						placeholder="Edição"
+						label="Nome da edição"
+					/>
 					<Wrapper />
 				</FormContainer>
 				{!isEdit ? (
-					<Button label="ADICIONAR LIVRO" onPress={onAddBook} />
+					<Button
+						label="ADICIONAR LIVRO"
+						isLoading={isLoading}
+						onPress={handleAddBook}
+					/>
 				) : (
 					<>
 						<Button label="EDITAR LIVRO" onPress={onEditBook} />

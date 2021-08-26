@@ -1,5 +1,6 @@
 import {useCallback, useEffect, useState} from 'react';
-import {getBooksByUserUid} from '../../utils/firestoreFunctions';
+import {BookInterface} from '../../types/book';
+import {addBookToUser, getBooksByUserUid} from '../../utils/firestoreFunctions';
 
 interface BooksInterface {
 	name: string;
@@ -21,6 +22,14 @@ const useBooks = (userUid: string, immediate: boolean = false) => {
 		}
 	}, [userUid]);
 
+	const addBook = async (book: BookInterface) => {
+		try {
+			await addBookToUser(userUid, book);
+		} catch (error) {
+			throw error;
+		}
+	};
+
 	useEffect(() => {
 		if (immediate && !books) {
 			getUserBooks();
@@ -31,6 +40,7 @@ const useBooks = (userUid: string, immediate: boolean = false) => {
 		getUserBooks,
 		books,
 		isSearching: isSearchingBooks,
+		addBook,
 	};
 };
 
