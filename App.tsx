@@ -2,6 +2,7 @@ import React from 'react';
 import {SafeAreaView, StatusBar} from 'react-native';
 import {ThemeProvider} from 'styled-components/native';
 import LoginPage from './src/pages/Login';
+import RegisterUserPage from './src/pages/RegisterUser';
 import theme from './src/utils/theme';
 
 const App = () => {

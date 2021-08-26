@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const MainContainer = styled.View`
 	flex: 1;
-	background: ${({theme}) => theme.colors.secondary};
+	background: ${({theme}) => theme.colors.background};
 	padding: ${({theme}) => `0px ${theme.spacings.padding.horizontal}`};
 	justify-content: center;
 	align-items: center;

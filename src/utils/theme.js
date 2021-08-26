@@ -9,6 +9,7 @@ const colors = {
 	secondary: '#cec6ba',
 	bold: '#0c0c10',
 	white: '#fff',
+	background: '#e4e6e6',
 };
 
 export default {

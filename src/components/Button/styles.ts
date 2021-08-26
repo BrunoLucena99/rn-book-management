@@ -9,7 +9,7 @@ interface ButtonContainerProps {
 export const ButtonContainer = styled.TouchableOpacity<ButtonContainerProps>`
 	width: 100%;
 	border-radius: 7px;
-	background: ${({theme, bgColor}) => theme.colors[bgColor ?? 'primary']};
+	background: ${({theme, bgColor}) => theme.colors[bgColor ?? 'bold']};
 	min-height: 50px;
 	justify-content: center;
 	align-items: center;
