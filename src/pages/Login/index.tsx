@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import useAuth from '../../hooks/useAuth';
 import {
 	InputWrapper,
 	MainContainer,
@@ -12,6 +13,11 @@ import {
 const LoginPage = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const {handleLoginWithEmail} = useAuth();
+
+	const onSubmit = () => {
+		handleLoginWithEmail(email, password);
+	};
 
 	return (
 		<MainContainer>
@@ -31,7 +37,7 @@ const LoginPage = () => {
 				returnKeyType="done"
 			/>
 			<InputWrapper />
-			<Button onPress={() => {}} label="ENTRAR" />
+			<Button onPress={onSubmit} label="ENTRAR" />
 			<RegisterButton>
 				<RegisterButtonText>Sou novo por aqui</RegisterButtonText>
 			</RegisterButton>
