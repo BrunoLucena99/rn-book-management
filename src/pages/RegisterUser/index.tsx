@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState} from 'react';
-import { Alert } from 'react-native';
+import {Alert} from 'react-native';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import useAuth from '../../hooks/useAuth';
@@ -30,7 +30,7 @@ const RegisterUserPage = ({navigation, route}: RegisterUserProps) => {
 			Alert.alert('Atenção', 'As senhas não conferem');
 			return;
 		}
-		registerUser(email, password);
+		registerUser(email, password, userName);
 	};
 
 	return (

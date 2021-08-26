@@ -1,7 +1,9 @@
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack/lib/typescript/src/types';
+import {Alert} from 'react-native';
 import {RootStackParamList} from '../../types/navigation';
+import {addFirestoreUser, getUserByUid} from '../../utils/firestoreFunctions';
 
 const useAuth = () => {
 	const navigation =
@@ -9,8 +11,8 @@ const useAuth = () => {
 
 	const loginWithEmail = async (email: string, password: string) => {
 		try {
-			const user = await auth().signInWithEmailAndPassword(email, password);
-			console.log(user);
+			const {user} = await auth().signInWithEmailAndPassword(email, password);
+			console.log(await getUserByUid(user.uid));
 		} catch (err) {
 			if (err.code === 'auth/user-not-found') {
 				navigation.navigate('RegisterUser', {email, password});
@@ -20,20 +22,35 @@ const useAuth = () => {
 		}
 	};
 
-	const registerUser = async (email, password) => {
+	const registerUser = async (
+		email: string,
+		password: string,
+		userName: string,
+	) => {
 		try {
 			const {user} = await auth().createUserWithEmailAndPassword(
 				email,
 				password,
 			);
-			console.log(user);
+			const userFirestore = await addFirestoreUser(user.uid, {
+				email,
+				userName,
+			});
+			console.log(userFirestore);
 		} catch (err) {
 			handleFirebaseErrors(err.code);
 		}
 	};
-
 	const handleFirebaseErrors = (errorCode?: string) => {
-		console.log('Erro não identificado', errorCode);
+		if (errorCode === 'auth/email-already-in-use') {
+			Alert.alert('Atenção', 'Usuário já está cadastrado');
+			return;
+		}
+		Alert.alert(
+			'Atenção',
+			'Não foi possível realizar sua solicitação, tente novamente mais tarde',
+		);
+		console.warn(errorCode);
 	};
 
 	return {
