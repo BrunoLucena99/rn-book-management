@@ -1,8 +1,7 @@
 import React from 'react';
 import {SafeAreaView, StatusBar} from 'react-native';
 import {ThemeProvider} from 'styled-components/native';
-import LoginPage from './src/pages/Login';
-import RegisterUserPage from './src/pages/RegisterUser';
+import Routes from './src/routes';
 import theme from './src/utils/theme';
 
 const App = () => {
@@ -10,7 +9,7 @@ const App = () => {
 		<SafeAreaView style={{flex: 1}}>
 			<StatusBar barStyle="light-content" />
 			<ThemeProvider theme={theme}>
-				<LoginPage />
+				<Routes />
 			</ThemeProvider>
 		</SafeAreaView>
 	);

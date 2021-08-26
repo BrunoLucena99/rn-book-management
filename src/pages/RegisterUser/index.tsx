@@ -1,6 +1,8 @@
 import React from 'react';
+import { useState } from 'react';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import {RegisterUserProps} from '../../types/navigation';
 import {
 	DescriptionText,
 	FormContainer,
@@ -10,7 +12,13 @@ import {
 	InputWrapper,
 } from './styles';
 
-const RegisterUserPage = () => {
+const RegisterUserPage = ({navigation, route}: RegisterUserProps) => {
+
+	const [email, setEmail] = useState(route.params?.email ?? '');
+	const [password, setPassword] = useState(route.params?.password ?? '');
+	const [confirmPassword, setConfirmPassword] = useState('');
+	const [userName, setUserName] = useState('');
+
 	return (
 		<>
 			<MainContainer>
@@ -21,20 +29,31 @@ const RegisterUserPage = () => {
 						keyboardType="email-address"
 						placeholder="email@mail.com"
 						label="Seu melhor email *"
+						value={email}
+						onChangeText={setEmail}
 					/>
 					<InputWrapper />
-					<Input placeholder="Seu nome completo aqui" label="Nome Completo *" />
+					<Input
+						value={userName}
+						onChangeText={setUserName}
+						placeholder="Seu nome completo aqui"
+						label="Nome Completo *"
+					/>
 					<InputWrapper />
 					<Input
 						secureTextEntry
 						placeholder="Sua senha aqui"
 						label="Sua senha *"
+						value={password}
+						onChangeText={setPassword}
 					/>
 					<InputWrapper />
 					<Input
 						secureTextEntry
 						placeholder="Sua senha aqui"
 						label="Confirme sua senha *"
+						value={confirmPassword}
+						onChangeText={setConfirmPassword}
 					/>
 				</FormContainer>
 			</MainContainer>
