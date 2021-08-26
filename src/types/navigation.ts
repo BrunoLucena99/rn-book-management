@@ -4,6 +4,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 export type RootStackParamList = {
 	RegisterUser?: {email?: string; password?: string};
 	Login: undefined;
+	Home: undefined;
 };
 
 export type LoginPageProps = {

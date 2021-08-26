@@ -1,17 +1,24 @@
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack/lib/typescript/src/types';
+import {useContext} from 'react';
 import {Alert} from 'react-native';
+import {UserContext} from '../../contexts/UserContext';
 import {RootStackParamList} from '../../types/navigation';
 import {addFirestoreUser, getUserByUid} from '../../utils/firestoreFunctions';
 
 const useAuth = () => {
+	const {saveUserAsync} = useContext(UserContext);
+
 	const navigation =
 		useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
 	const loginWithEmail = async (email: string, password: string) => {
 		try {
 			const {user} = await auth().signInWithEmailAndPassword(email, password);
+			const userFirestore = await getUserByUid(user.uid);
+			saveUserAsync(userFirestore);
+
 			console.log(await getUserByUid(user.uid));
 		} catch (err) {
 			if (err.code === 'auth/user-not-found') {
@@ -36,7 +43,7 @@ const useAuth = () => {
 				email,
 				userName,
 			});
-			console.log(userFirestore);
+			saveUserAsync(userFirestore);
 		} catch (err) {
 			handleFirebaseErrors(err.code);
 		}
