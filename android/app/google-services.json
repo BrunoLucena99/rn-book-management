@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "953237648442",
+    "project_id": "book-management-8ada9",
+    "storage_bucket": "book-management-8ada9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:953237648442:android:684d977aab77722c1eb103",
+        "android_client_info": {
+          "package_name": "com.bookmanagementrn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "953237648442-9avcdjlele5dcqu6jrcsk33pinbi9s4l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bookmanagementrn",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "953237648442-ifbetb6d6h4lpd93euemftjca44u861q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByM8tfSdBaOKpi134w7iw3fzmACg_CImI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "953237648442-ifbetb6d6h4lpd93euemftjca44u861q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "953237648442-sc19s9s8q5u44ef9vqrseeln28n0gpml.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bruno.bookmanagementrn"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
