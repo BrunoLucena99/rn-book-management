@@ -1,5 +1,6 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {FlatList, Text} from 'react-native';
+import EmptyBooksList from '../../components/EmptyBooksList';
 import Loading from '../../components/Loading';
 import useBooks from '../../hooks/useBooks';
 import {HomePageProps} from '../../types/navigation';
@@ -8,17 +9,21 @@ import {MainContainer} from './styles';
 const HomePage = ({route}: HomePageProps) => {
 	const {books, isSearching} = useBooks(route.params.userUid, true);
 
-	if (!isSearching) {
+	if (isSearching) {
 		return <Loading />;
 	}
 
 	return (
 		<MainContainer>
-			<Text>Home page</Text>
-			{books &&
-				books.map(book => {
-					return <Text>{JSON.stringify(book)}</Text>;
-				})}
+			{!!books && (
+				<FlatList
+					contentContainerStyle={{flexGrow: 1}}
+					data={books}
+					keyExtractor={(book, index) => `${book.name}-${index}`}
+					renderItem={() => <Text>Book</Text>}
+					ListEmptyComponent={EmptyBooksList}
+				/>
+			)}
 		</MainContainer>
 	);
 };
