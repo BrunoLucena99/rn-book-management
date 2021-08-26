@@ -55,11 +55,13 @@ export const getBooksByUserUid = async (uid: string) => {
 };
 
 export const addBookToUser = async (userUid: string, book: NewBookProps) => {
-	return await fireDb()
+	const bookTemp = await fireDb()
 		.collection('users')
 		.doc(userUid)
 		.collection('books')
 		.add(book);
+	console.log(bookTemp);
+	return bookTemp;
 };
 
 export const editBookToUser = async (userUid: string, book: BookInterface) => {

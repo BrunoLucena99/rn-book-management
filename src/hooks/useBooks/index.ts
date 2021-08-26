@@ -26,6 +26,7 @@ const useBooks = (userUid: string, immediate: boolean = false) => {
 	const addBook = async (book: NewBookProps) => {
 		try {
 			await addBookToUser(userUid, book);
+			await getUserBooks();
 		} catch (error) {
 			throw error;
 		}

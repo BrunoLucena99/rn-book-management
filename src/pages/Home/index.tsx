@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {FlatList, Text, TouchableOpacity} from 'react-native';
+import AddBookButton from '../../components/AddBookButton';
 import BookModal from '../../components/BookModal';
 import EmptyBooksList from '../../components/EmptyBooksList';
 import Loading from '../../components/Loading';
@@ -53,6 +54,7 @@ const HomePage = ({route}: HomePageProps) => {
 						ListEmptyComponent={() => <EmptyBooksList onAdd={onOpenModal} />}
 					/>
 				)}
+				<AddBookButton onPress={onOpenModal} />
 			</MainContainer>
 			{modalVisible && (
 				<BookModal
