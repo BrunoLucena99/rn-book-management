@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
+import { Alert } from 'react-native';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import useAuth from '../../hooks/useAuth';
+import {LoginPageProps} from '../../types/navigation';
 import {
 	InputWrapper,
 	MainContainer,
@@ -10,13 +12,21 @@ import {
 	Title,
 } from './styles';
 
-const LoginPage = () => {
+const LoginPage = ({navigation}: LoginPageProps) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const {handleLoginWithEmail} = useAuth();
+	const {loginWithEmail} = useAuth();
 
 	const onSubmit = () => {
-		handleLoginWithEmail(email, password);
+		if (!email || !password) {
+			Alert.alert('Atenção', 'Preencha o e-mail e a sua senha');
+			return;
+		}
+		loginWithEmail(email, password);
+	};
+
+	const goToRegisterUserPage = () => {
+		navigation.navigate('RegisterUser');
 	};
 
 	return (
@@ -38,7 +48,7 @@ const LoginPage = () => {
 			/>
 			<InputWrapper />
 			<Button onPress={onSubmit} label="ENTRAR" />
-			<RegisterButton>
+			<RegisterButton onPress={goToRegisterUserPage}>
 				<RegisterButtonText>Sou novo por aqui</RegisterButtonText>
 			</RegisterButton>
 		</MainContainer>

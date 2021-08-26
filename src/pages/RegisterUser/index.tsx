@@ -1,7 +1,9 @@
 import React from 'react';
-import { useState } from 'react';
+import {useState} from 'react';
+import { Alert } from 'react-native';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import useAuth from '../../hooks/useAuth';
 import {RegisterUserProps} from '../../types/navigation';
 import {
 	DescriptionText,
@@ -13,11 +15,23 @@ import {
 } from './styles';
 
 const RegisterUserPage = ({navigation, route}: RegisterUserProps) => {
-
 	const [email, setEmail] = useState(route.params?.email ?? '');
 	const [password, setPassword] = useState(route.params?.password ?? '');
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const [userName, setUserName] = useState('');
+	const {registerUser} = useAuth();
+
+	const onRegisterUser = () => {
+		if (!email || !password || !userName) {
+			Alert.alert('Atenção', 'Preencha todas as informações');
+			return;
+		}
+		if (password !== confirmPassword) {
+			Alert.alert('Atenção', 'As senhas não conferem');
+			return;
+		}
+		registerUser(email, password);
+	};
 
 	return (
 		<>
@@ -62,7 +76,7 @@ const RegisterUserPage = ({navigation, route}: RegisterUserProps) => {
 					label="Prosseguir"
 					bgColor="bold"
 					textColor="white"
-					onPress={() => {}}
+					onPress={onRegisterUser}
 				/>
 			</Footer>
 		</>

@@ -7,7 +7,7 @@ const useAuth = () => {
 	const navigation =
 		useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-	const handleLoginWithEmail = async (email: string, password: string) => {
+	const loginWithEmail = async (email: string, password: string) => {
 		try {
 			const user = await auth().signInWithEmailAndPassword(email, password);
 			console.log(user);
@@ -20,12 +20,25 @@ const useAuth = () => {
 		}
 	};
 
+	const registerUser = async (email, password) => {
+		try {
+			const {user} = await auth().createUserWithEmailAndPassword(
+				email,
+				password,
+			);
+			console.log(user);
+		} catch (err) {
+			handleFirebaseErrors(err.code);
+		}
+	};
+
 	const handleFirebaseErrors = (errorCode?: string) => {
 		console.log('Erro não identificado', errorCode);
 	};
 
 	return {
-		handleLoginWithEmail,
+		loginWithEmail,
+		registerUser,
 	};
 };
 
