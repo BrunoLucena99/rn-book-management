@@ -1,15 +1,19 @@
 import React from 'react';
 import {Text} from 'react-native';
 import {Container} from './styles';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useTheme} from 'styled-components';
 
 interface AddBookButtonProps {
 	onPress: () => void;
 }
 
 const AddBookButton = ({onPress}: AddBookButtonProps) => {
+	const {colors} = useTheme();
+
 	return (
 		<Container onPress={onPress} activeOpacity={0.7}>
-			<Text style={{color: 'white', fontSize: 20}}>+</Text>
+			<MaterialCommunityIcons name="plus" size={20} color={colors.white} />
 		</Container>
 	);
 };
