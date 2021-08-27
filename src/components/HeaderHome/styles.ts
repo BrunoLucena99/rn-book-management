@@ -16,6 +16,6 @@ export const TextHeader = styled.Text`
 
 export const ProfileButton = styled.TouchableOpacity`
 	position: absolute;
-	top: 5px;
+	top: 10px;
 	right: 5px;
 `;

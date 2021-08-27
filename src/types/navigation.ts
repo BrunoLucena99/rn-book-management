@@ -6,6 +6,7 @@ export type RootStackParamList = {
 	RegisterUser?: {email?: string; password?: string};
 	Login: undefined;
 	Home: {userUid: string};
+	Profile: undefined;
 	ManageBook: {
 		book?: BookInterface;
 		onAdd: (newBook: NewBookProps) => Promise<void>;
@@ -31,4 +32,8 @@ export type HomePageProps = {
 export type ManageBookProps = {
 	navigation: NativeStackNavigationProp<RootStackParamList, 'ManageBook'>;
 	route: RouteProp<RootStackParamList, 'ManageBook'>;
+};
+
+export type Profile = {
+	navigation: NativeStackNavigationProp<RootStackParamList, 'Profile'>;
 };

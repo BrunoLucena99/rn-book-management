@@ -8,6 +8,7 @@ import {useContext} from 'react';
 import {UserContext} from '../contexts/UserContext';
 import HomePage from '../pages/Home';
 import ManageBook from '../pages/ManageBook';
+import Profile from '../pages/Profile';
 
 const Routes = () => {
 	const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -29,6 +30,7 @@ const Routes = () => {
 							initialParams={{userUid: user.uid}}
 						/>
 						<Stack.Screen name="ManageBook" component={ManageBook} />
+						<Stack.Screen name="Profile" component={Profile} />
 					</>
 				)}
 			</Stack.Navigator>

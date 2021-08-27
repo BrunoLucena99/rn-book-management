@@ -3,7 +3,7 @@ import {Row, Label, Value} from './styles';
 
 interface RowValueProps {
 	label: string;
-	value: string;
+	value: string | number;
 }
 
 const RowValue = ({label, value}: RowValueProps) => (

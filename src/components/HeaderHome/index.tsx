@@ -1,18 +1,21 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Container, ProfileButton, TextHeader} from './styles';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {useTheme} from 'styled-components';
-import {UserContext} from '../../contexts/UserContext';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack/lib/typescript/src/types';
+import {RootStackParamList} from '../../types/navigation';
 
 const HeaderHome = () => {
 	const {colors} = useTheme();
-	const {logoutUser} = useContext(UserContext);
+	const navigation =
+		useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
 	return (
 		<Container>
 			<TextHeader>Book Managament List</TextHeader>
-			<ProfileButton onPress={logoutUser}>
-				<MaterialIcons name="logout" size={24} color={colors.white} />
+			<ProfileButton onPress={() => navigation.navigate('Profile')}>
+				<FontAwesomeIcon name="user-circle-o" size={24} color={colors.white} />
 			</ProfileButton>
 		</Container>
 	);
