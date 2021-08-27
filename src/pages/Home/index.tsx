@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
-import {FlatList, TouchableOpacity} from 'react-native';
+import {useContext} from 'react';
+import {FlatList, Text, TouchableOpacity} from 'react-native';
 import AddBookButton from '../../components/AddBookButton';
 import BookModal from '../../components/BookModal';
 import EmptyBooksList from '../../components/EmptyBooksList';
 import Loading from '../../components/Loading';
 import RenderBook from '../../components/RenderBook';
+import {UserContext} from '../../contexts/UserContext';
 import useBooks from '../../hooks/useBooks';
 import {BookInterface} from '../../types/book';
 import {HomePageProps} from '../../types/navigation';
@@ -17,6 +19,7 @@ const HomePage = ({route}: HomePageProps) => {
 	);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [selectedBook, setSelectedBook] = useState<BookInterface | null>(null);
+	const {logoutUser} = useContext(UserContext);
 
 	const onCloseModal = () => {
 		setModalVisible(false);
@@ -44,6 +47,9 @@ const HomePage = ({route}: HomePageProps) => {
 			<MainContainer>
 				<Header>
 					<TextHeader>Book Managament List</TextHeader>
+					<TouchableOpacity onPress={logoutUser}>
+						<Text>Sair</Text>
+					</TouchableOpacity>
 				</Header>
 				{!!books && (
 					<FlatList

@@ -13,6 +13,10 @@ const useAuth = () => {
 	const navigation =
 		useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
+	const userSignout = async () => {
+		return await auth().signOut();
+	};
+
 	const loginWithEmail = async (email: string, password: string) => {
 		try {
 			const {user} = await auth().signInWithEmailAndPassword(email, password);
@@ -61,6 +65,7 @@ const useAuth = () => {
 	return {
 		loginWithEmail,
 		registerUser,
+		userSignout,
 	};
 };
 
