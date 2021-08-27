@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Alert} from 'react-native';
 import Button from '../../components/Button';
+import GoBack from '../../components/GoBack';
 import Input from '../../components/Input';
 import {ManageBookProps} from '../../types/navigation';
 import {
@@ -76,6 +77,7 @@ const ManageBook = ({route, navigation}: ManageBookProps) => {
 
 	return (
 		<MainContainer>
+			<GoBack onPress={navigation.goBack} />
 			<Title>{isEdit ? 'Editar/Remover livro' : 'Adicionar um livro'}</Title>
 			<FormContainer>
 				<Input

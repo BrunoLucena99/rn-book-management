@@ -54,3 +54,7 @@ export const Footer = styled.View`
 	flex: 1;
 	justify-content: flex-end;
 `;
+
+export const ButtonWrapper = styled.View`
+	margin-top: 10px;
+`;

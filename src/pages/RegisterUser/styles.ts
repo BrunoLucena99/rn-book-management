@@ -28,6 +28,5 @@ export const InputWrapper = styled.View`
 `;
 
 export const Footer = styled.View`
-	padding: ${({theme}) => theme.spacings.padding.horizontal};
 	background: ${({theme}) => theme.colors.background};
 `;

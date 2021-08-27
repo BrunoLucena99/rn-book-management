@@ -34,6 +34,6 @@ export type ManageBookProps = {
 	route: RouteProp<RootStackParamList, 'ManageBook'>;
 };
 
-export type Profile = {
+export type ProfileProps = {
 	navigation: NativeStackNavigationProp<RootStackParamList, 'Profile'>;
 };

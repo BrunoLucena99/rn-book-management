@@ -1,8 +1,9 @@
 import React, {createContext, ReactNode} from 'react';
 import {useCallback, useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {editFirestoreUser} from '../../utils/firestoreFunctions';
 
-interface UserInterface {
+export interface UserInterface {
 	userName: string;
 	avatar?: string;
 	email: string;
@@ -13,6 +14,7 @@ interface UserContextData {
 	user: UserInterface | null;
 	saveUserAsync: (userAux: UserInterface) => void;
 	logoutUser: () => void;
+	editUser: (userAux: UserInterface) => void;
 }
 
 const USER_KEY = '@BookManagamentUser';
@@ -25,6 +27,13 @@ const UserProvider = ({children}: {children: ReactNode}) => {
 	const saveUserAsync = async (userAux: UserInterface) => {
 		await AsyncStorage.setItem(USER_KEY, JSON.stringify(userAux));
 		setUser(userAux);
+	};
+
+	const editUser = async (userAux: UserInterface) => {
+		try {
+			await editFirestoreUser(userAux);
+			saveUserAsync(userAux);
+		} catch (err) {}
 	};
 
 	const loadUser = useCallback(async () => {
@@ -46,7 +55,7 @@ const UserProvider = ({children}: {children: ReactNode}) => {
 	};
 
 	return (
-		<UserContext.Provider value={{saveUserAsync, user, logoutUser}}>
+		<UserContext.Provider value={{saveUserAsync, user, logoutUser, editUser}}>
 			{children}
 		</UserContext.Provider>
 	);

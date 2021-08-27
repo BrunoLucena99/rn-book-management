@@ -1,4 +1,5 @@
 import {fireDb, userCollection} from '../config/firebase';
+import {UserInterface} from '../contexts/UserContext';
 import {BookInterface, NewBookProps} from '../types/book';
 
 interface FirestoreUser {
@@ -16,6 +17,17 @@ export const addFirestoreUser = async (uid: string, user: FirestoreUser) => {
 		};
 	} catch (err) {
 		throw err.code;
+	}
+};
+
+export const editFirestoreUser = async (user: UserInterface) => {
+	const {email, userName, avatar} = user;
+	try {
+		await userCollection
+			.doc(user.uid)
+			.update({email, userName, avatar: avatar ?? ''});
+	} catch (err) {
+		throw err.code ?? err.toString();
 	}
 };
 

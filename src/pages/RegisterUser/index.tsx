@@ -14,7 +14,7 @@ import {
 	InputWrapper,
 } from './styles';
 
-const RegisterUserPage = ({navigation, route}: RegisterUserProps) => {
+const RegisterUserPage = ({route}: RegisterUserProps) => {
 	const [email, setEmail] = useState(route.params?.email ?? '');
 	const [password, setPassword] = useState(route.params?.password ?? '');
 	const [confirmPassword, setConfirmPassword] = useState('');
@@ -70,15 +70,15 @@ const RegisterUserPage = ({navigation, route}: RegisterUserProps) => {
 						onChangeText={setConfirmPassword}
 					/>
 				</FormContainer>
+				<Footer>
+					<Button
+						label="Prosseguir"
+						bgColor="bold"
+						textColor="white"
+						onPress={onRegisterUser}
+					/>
+				</Footer>
 			</MainContainer>
-			<Footer>
-				<Button
-					label="Prosseguir"
-					bgColor="bold"
-					textColor="white"
-					onPress={onRegisterUser}
-				/>
-			</Footer>
 		</>
 	);
 };
