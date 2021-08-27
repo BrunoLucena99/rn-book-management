@@ -7,6 +7,7 @@ import {RootStackParamList} from '../types/navigation';
 import {useContext} from 'react';
 import {UserContext} from '../contexts/UserContext';
 import HomePage from '../pages/Home';
+import ManageBook from '../pages/ManageBook';
 
 const Routes = () => {
 	const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -21,11 +22,14 @@ const Routes = () => {
 						<Stack.Screen name="RegisterUser" component={RegisterUserPage} />
 					</>
 				) : (
-					<Stack.Screen
-						name="Home"
-						component={HomePage}
-						initialParams={{userUid: user.uid}}
-					/>
+					<>
+						<Stack.Screen
+							name="Home"
+							component={HomePage}
+							initialParams={{userUid: user.uid}}
+						/>
+						<Stack.Screen name="ManageBook" component={ManageBook} />
+					</>
 				)}
 			</Stack.Navigator>
 		</NavigationContainer>

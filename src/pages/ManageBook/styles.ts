@@ -1,14 +1,9 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.SafeAreaView`
-	background: ${({theme}) => theme.colors.white};
-	bottom: 0;
-	position: absolute;
-	width: 100%;
-	border-top-left-radius: 15px;
-	border-top-right-radius: 15px;
-	padding: ${({theme}) => `10px ${theme.spacings.padding.horizontal}`};
-	align-items: center;
+export const MainContainer = styled.SafeAreaView`
+	flex-grow: 1;
+	background: ${({theme}) => theme.colors.background};
+	padding: ${({theme}) => `15px ${theme.spacings.padding.horizontal}`};
 `;
 
 export const Title = styled.Text`
@@ -25,4 +20,8 @@ export const FormContainer = styled.ScrollView`
 
 export const Wrapper = styled.View`
 	margin-top: 10px;
+`;
+
+export const BtnWrapper = styled.View`
+	margin-top: 30px;
 `;

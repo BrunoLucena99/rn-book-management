@@ -12,7 +12,7 @@ const HeaderHome = () => {
 		<Container>
 			<TextHeader>Book Managament List</TextHeader>
 			<ProfileButton onPress={logoutUser}>
-				<MaterialIcons name="logout" size={20} color={colors.white} />
+				<MaterialIcons name="logout" size={24} color={colors.white} />
 			</ProfileButton>
 		</Container>
 	);

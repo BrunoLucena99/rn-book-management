@@ -60,7 +60,6 @@ export const addBookToUser = async (userUid: string, book: NewBookProps) => {
 		.doc(userUid)
 		.collection('books')
 		.add(book);
-	console.log(bookTemp);
 	return bookTemp;
 };
 

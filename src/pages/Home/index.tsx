@@ -1,7 +1,6 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {FlatList, TouchableOpacity} from 'react-native';
 import AddBookButton from '../../components/AddBookButton';
-import BookModal from '../../components/BookModal';
 import EmptyBooksList from '../../components/EmptyBooksList';
 import HeaderHome from '../../components/HeaderHome';
 import Loading from '../../components/Loading';
@@ -11,29 +10,19 @@ import {BookInterface} from '../../types/book';
 import {HomePageProps} from '../../types/navigation';
 import {MainContainer} from './styles';
 
-const HomePage = ({route}: HomePageProps) => {
+const HomePage = ({route, navigation}: HomePageProps) => {
 	const {books, isSearching, addBook, editBook, removeBook} = useBooks(
 		route.params.userUid,
 		true,
 	);
-	const [modalVisible, setModalVisible] = useState(false);
-	const [selectedBook, setSelectedBook] = useState<BookInterface | null>(null);
 
-	const onCloseModal = () => {
-		setModalVisible(false);
-		setSelectedBook(null);
-	};
-
-	const onOpenModal = () => setModalVisible(true);
-
-	const onSelectedBook = (index: number) => {
-		if (books) {
-			const bookAux = books[index];
-			setSelectedBook(bookAux);
-			onOpenModal();
-		} else {
-			setSelectedBook(null);
-		}
+	const goToManageBookPage = (book?: BookInterface) => {
+		navigation.navigate('ManageBook', {
+			book,
+			onAdd: addBook,
+			onEdit: editBook,
+			onRemove: removeBook,
+		});
 	};
 
 	if (isSearching) {
@@ -49,27 +38,20 @@ const HomePage = ({route}: HomePageProps) => {
 						contentContainerStyle={{flexGrow: 1, marginHorizontal: 15}}
 						data={books}
 						keyExtractor={(book, index) => `${book.name}-${index}`}
-						renderItem={({item, index}) => (
+						renderItem={({item}) => (
 							<TouchableOpacity
 								activeOpacity={0.7}
-								onPress={() => onSelectedBook(index)}>
+								onPress={() => goToManageBookPage(item)}>
 								<RenderBook book={item} />
 							</TouchableOpacity>
 						)}
-						ListEmptyComponent={() => <EmptyBooksList onAdd={onOpenModal} />}
+						ListEmptyComponent={() => (
+							<EmptyBooksList onAdd={() => goToManageBookPage()} />
+						)}
 					/>
 				)}
-				<AddBookButton onPress={onOpenModal} />
+				<AddBookButton onPress={() => goToManageBookPage()} />
 			</MainContainer>
-			{modalVisible && (
-				<BookModal
-					onRemoveBook={removeBook}
-					onEditBook={editBook}
-					onAddBook={addBook}
-					onCloseRequest={onCloseModal}
-					book={selectedBook}
-				/>
-			)}
 		</>
 	);
 };
