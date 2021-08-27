@@ -74,15 +74,29 @@ const useAuth = () => {
 		}
 	};
 	const handleFirebaseErrors = (errorCode?: string) => {
-		if (errorCode === 'auth/email-already-in-use') {
-			Alert.alert('Atenção', 'Usuário já está cadastrado');
-			return;
+		if (errorCode) {
+			switch (errorCode) {
+				case 'auth/email-already-in-use':
+					Alert.alert('Atenção', 'Usuário já está cadastrado');
+					return;
+
+				case 'auth/weak-password':
+					Alert.alert(
+						'Atenção',
+						'Senha fraca, tente uma igual ou maior que 6 dígitos',
+					);
+					return;
+
+				case 'auth/wrong-password':
+					Alert.alert('Atenção', 'Senha incorreta');
+					return;
+			}
 		}
+
 		Alert.alert(
 			'Atenção',
 			'Não foi possível realizar sua solicitação, tente novamente mais tarde',
 		);
-		console.log(errorCode);
 	};
 
 	return {
