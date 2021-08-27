@@ -1,16 +1,15 @@
 import React, {useState} from 'react';
-import {useContext} from 'react';
-import {FlatList, Text, TouchableOpacity} from 'react-native';
+import {FlatList, TouchableOpacity} from 'react-native';
 import AddBookButton from '../../components/AddBookButton';
 import BookModal from '../../components/BookModal';
 import EmptyBooksList from '../../components/EmptyBooksList';
+import HeaderHome from '../../components/HeaderHome';
 import Loading from '../../components/Loading';
 import RenderBook from '../../components/RenderBook';
-import {UserContext} from '../../contexts/UserContext';
 import useBooks from '../../hooks/useBooks';
 import {BookInterface} from '../../types/book';
 import {HomePageProps} from '../../types/navigation';
-import {Header, MainContainer, TextHeader} from './styles';
+import {MainContainer} from './styles';
 
 const HomePage = ({route}: HomePageProps) => {
 	const {books, isSearching, addBook, editBook, removeBook} = useBooks(
@@ -19,7 +18,6 @@ const HomePage = ({route}: HomePageProps) => {
 	);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [selectedBook, setSelectedBook] = useState<BookInterface | null>(null);
-	const {logoutUser} = useContext(UserContext);
 
 	const onCloseModal = () => {
 		setModalVisible(false);
@@ -45,12 +43,7 @@ const HomePage = ({route}: HomePageProps) => {
 	return (
 		<>
 			<MainContainer>
-				<Header>
-					<TextHeader>Book Managament List</TextHeader>
-					<TouchableOpacity onPress={logoutUser}>
-						<Text>Sair</Text>
-					</TouchableOpacity>
-				</Header>
+				<HeaderHome />
 				{!!books && (
 					<FlatList
 						contentContainerStyle={{flexGrow: 1, marginHorizontal: 15}}
