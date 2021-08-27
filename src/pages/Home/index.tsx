@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {FlatList, Text, TouchableOpacity} from 'react-native';
+import {FlatList, TouchableOpacity} from 'react-native';
 import AddBookButton from '../../components/AddBookButton';
 import BookModal from '../../components/BookModal';
 import EmptyBooksList from '../../components/EmptyBooksList';
 import Loading from '../../components/Loading';
+import RenderBook from '../../components/RenderBook';
 import useBooks from '../../hooks/useBooks';
 import {BookInterface} from '../../types/book';
 import {HomePageProps} from '../../types/navigation';
@@ -46,12 +47,14 @@ const HomePage = ({route}: HomePageProps) => {
 				</Header>
 				{!!books && (
 					<FlatList
-						contentContainerStyle={{flexGrow: 1}}
+						contentContainerStyle={{flexGrow: 1, marginHorizontal: 15}}
 						data={books}
 						keyExtractor={(book, index) => `${book.name}-${index}`}
 						renderItem={({item, index}) => (
-							<TouchableOpacity onPress={() => onSelectedBook(index)}>
-								<Text>{item.name}</Text>
+							<TouchableOpacity
+								activeOpacity={0.7}
+								onPress={() => onSelectedBook(index)}>
+								<RenderBook book={item} />
 							</TouchableOpacity>
 						)}
 						ListEmptyComponent={() => <EmptyBooksList onAdd={onOpenModal} />}

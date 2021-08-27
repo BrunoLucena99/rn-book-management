@@ -1,7 +1,8 @@
 import styled from 'styled-components/native';
 
 export const MainContainer = styled.SafeAreaView`
-	flex-grow: 1;
+	flex: 1;
+	margin-bottom: 10px;
 `;
 
 export const Header = styled.View`
