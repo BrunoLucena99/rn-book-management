@@ -1,5 +1,4 @@
 import React from 'react';
-import {Text} from 'react-native';
 import {Container} from './styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useTheme} from 'styled-components';
