@@ -19,6 +19,10 @@ export const InputWrapper = styled.View`
 	margin-bottom: 10px;
 `;
 
+export const ButtonWrapper = styled.View`
+	margin: 7px 0px;
+`;
+
 export const RegisterButton = styled.TouchableOpacity`
 	align-self: flex-end;
 	margin-top: 10px;

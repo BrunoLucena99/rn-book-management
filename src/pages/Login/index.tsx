@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import { Alert } from 'react-native';
+import {Alert} from 'react-native';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import useAuth from '../../hooks/useAuth';
 import {LoginPageProps} from '../../types/navigation';
 import {
+	ButtonWrapper,
 	InputWrapper,
 	MainContainer,
 	RegisterButton,
@@ -15,7 +16,7 @@ import {
 const LoginPage = ({navigation}: LoginPageProps) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const {loginWithEmail} = useAuth();
+	const {loginWithEmail, loginWithGoogle} = useAuth();
 
 	const onSubmit = () => {
 		if (!email || !password) {
@@ -48,6 +49,13 @@ const LoginPage = ({navigation}: LoginPageProps) => {
 			/>
 			<InputWrapper />
 			<Button onPress={onSubmit} label="ENTRAR" />
+			<ButtonWrapper />
+			<Button
+				bgColor="white"
+				textColor="bold"
+				onPress={loginWithGoogle}
+				label="ENTRAR COM O GOOGLE"
+			/>
 			<RegisterButton onPress={goToRegisterUserPage}>
 				<RegisterButtonText>Sou novo por aqui</RegisterButtonText>
 			</RegisterButton>

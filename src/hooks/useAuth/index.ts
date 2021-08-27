@@ -6,15 +6,38 @@ import {Alert} from 'react-native';
 import {UserContext} from '../../contexts/UserContext';
 import {RootStackParamList} from '../../types/navigation';
 import {addFirestoreUser, getUserByUid} from '../../utils/firestoreFunctions';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 const useAuth = () => {
 	const {saveUserAsync} = useContext(UserContext);
+
+	GoogleSignin.configure({
+		webClientId:
+			'953237648442-ifbetb6d6h4lpd93euemftjca44u861q.apps.googleusercontent.com',
+	});
 
 	const navigation =
 		useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
 	const userSignout = async () => {
 		return await auth().signOut();
+	};
+
+	const loginWithGoogle = async () => {
+		try {
+			const {idToken} = await GoogleSignin.signIn();
+			const credentials = await auth.GoogleAuthProvider.credential(idToken);
+			const {user} = await auth().signInWithCredential(credentials);
+			const userTemp = {
+				userName: user.displayName ?? '',
+				avatar: user.photoURL ?? '',
+				email: user.email!,
+			};
+			const userFirestore = await addFirestoreUser(user.uid, userTemp);
+			saveUserAsync(userFirestore);
+		} catch (e) {
+			handleFirebaseErrors(e.code);
+		}
 	};
 
 	const loginWithEmail = async (email: string, password: string) => {
@@ -66,6 +89,7 @@ const useAuth = () => {
 		loginWithEmail,
 		registerUser,
 		userSignout,
+		loginWithGoogle,
 	};
 };
 
